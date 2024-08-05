@@ -1,6 +1,6 @@
 extends State
 
-@export var JUMP_VELOCITY = -400.0
+@export var JUMP_VELOCITY = -300.0
 
 func enter():
 	super.enter()
@@ -18,7 +18,7 @@ func transition():
 		get_parent().change_state("Fall")
 		
 	elif Input.is_action_just_pressed("Melee_Attack"):
-		get_parent().change_state("Melee_Attack1")
+		get_parent().change_state("Melee_Attack")
 		
 	elif Input.is_action_just_pressed("Ranged_Attack"):
 		get_parent().change_state("Ranged_Attack")

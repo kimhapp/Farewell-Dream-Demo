@@ -2,6 +2,8 @@ extends CharacterBody2D
 
 @export var SPEED = 250.0
 @export var GRAVITY = 1000.0
+@export var ATTACK_GRAVITY = 500
+
 var direction : float
 var has_air_jumped : bool
 var has_air_dashed : bool

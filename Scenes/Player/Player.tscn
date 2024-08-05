@@ -1,4 +1,4 @@
-[gd_scene load_steps=38 format=3 uid="uid://emnihdau0kai"]
+[gd_scene load_steps=34 format=3 uid="uid://emnihdau0kai"]
 
 [ext_resource type="Texture2D" uid="uid://csvhl5ipccwde" path="res://Assets/Player_Sprites/Idle.png" id="1_ei7u5"]
 [ext_resource type="Script" path="res://Scenes/Player/Scripts/Player.gd" id="1_wcxmh"]
@@ -6,8 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://d14vumshxe0mo" path="res://Assets/Player_Sprites/Fall.png" id="3_yy820"]
 [ext_resource type="Texture2D" uid="uid://cducl4dtwg0fr" path="res://Assets/Player_Sprites/Death.png" id="4_eomqv"]
 [ext_resource type="Texture2D" uid="uid://b2jhkl1ycjjhg" path="res://Assets/Player_Sprites/Jump.png" id="5_eymd1"]
-[ext_resource type="Texture2D" uid="uid://dgrqrjwgtacq6" path="res://Assets/Player_Sprites/Attack1.png" id="6_pu57w"]
-[ext_resource type="Texture2D" uid="uid://bgvk1ybrerl3u" path="res://Assets/Player_Sprites/Attack2.png" id="7_vct1f"]
+[ext_resource type="Texture2D" uid="uid://b0m26wixwiinf" path="res://Assets/Player_Sprites/Melee_Attack.png" id="8_14g6g"]
 [ext_resource type="Texture2D" uid="uid://rn01d72earna" path="res://Assets/Player_Sprites/Attack3.png" id="8_uo6rn"]
 [ext_resource type="Texture2D" uid="uid://osyvuul8leiy" path="res://Assets/Player_Sprites/Take hit.png" id="9_bmwxx"]
 [ext_resource type="Script" path="res://Scripts/State.gd" id="10_ll0os"]
@@ -18,9 +17,8 @@
 [ext_resource type="Script" path="res://Scenes/Player/Scripts/Air_Jumping.gd" id="15_cw6yl"]
 [ext_resource type="Script" path="res://Scenes/Player/Scripts/Fall.gd" id="15_em3jr"]
 [ext_resource type="Script" path="res://Scenes/Player/Scripts/Dash.gd" id="17_jhagj"]
-[ext_resource type="Script" path="res://Scenes/Player/Scripts/Melee_Attack1.gd" id="18_oh8yk"]
-[ext_resource type="Script" path="res://Scenes/Player/Scripts/Melee_Attack2.gd" id="19_g1h2u"]
-[ext_resource type="Script" path="res://Scenes/Player/Scripts/Melee_Attack3.gd" id="20_yi7lh"]
+[ext_resource type="Script" path="res://Scenes/Player/Scripts/Ranged_Attack.gd" id="18_ghoji"]
+[ext_resource type="Script" path="res://Scenes/Player/Scripts/Melee_Attack.gd" id="18_oh8yk"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_x8mqv"]
 radius = 11.0
@@ -343,20 +341,21 @@ tracks/3/keys = {
 "values": [ExtResource("5_eymd1")]
 }
 
-[sub_resource type="Animation" id="Animation_01vvd"]
-resource_name = "Melee_Attack1"
-step = 0.2
+[sub_resource type="Animation" id="Animation_jphad"]
+resource_name = "Melee_Attack"
+length = 0.888899
+step = 0.111111
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/path = NodePath("Sprite2D:hframes")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.2, 0.4, 0.6, 0.8),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
-"update": 0,
-"values": [0, 1, 2, 3, 4]
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [5]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -367,184 +366,56 @@ tracks/1/loop_wrap = true
 tracks/1/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [1]
+"update": 1,
+"values": [2]
 }
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("Sprite2D:hframes")
+tracks/2/path = NodePath("Weapon HitBox1/CollisionShape2D:disabled")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [5]
+"times": PackedFloat32Array(0.333333, 0.444444, 0.777778, 0.888889),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [false, true, false, true]
 }
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("Sprite2D:texture")
+tracks/3/path = NodePath("Weapon HitBox2/CollisionShape2D:disabled")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [ExtResource("6_pu57w")]
+"times": PackedFloat32Array(0.333333, 0.444444, 0.777778, 0.888889),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [false, true, false, true]
 }
 tracks/4/type = "value"
 tracks/4/imported = false
 tracks/4/enabled = true
-tracks/4/path = NodePath("Weapon HitBox1/CollisionShape2D:disabled")
+tracks/4/path = NodePath("Sprite2D:texture")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
-"times": PackedFloat32Array(0.6, 0.8),
-"transitions": PackedFloat32Array(1, 1),
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [false, true]
+"values": [ExtResource("8_14g6g")]
 }
 tracks/5/type = "value"
 tracks/5/imported = false
 tracks/5/enabled = true
-tracks/5/path = NodePath("Weapon HitBox2/CollisionShape2D:disabled")
+tracks/5/path = NodePath("Sprite2D:frame_coords")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/keys = {
-"times": PackedFloat32Array(0.6, 0.8),
-"transitions": PackedFloat32Array(1, 1),
+"times": PackedFloat32Array(0, 0.111111, 0.222222, 0.333333, 0.444444, 0.555555, 0.666666, 0.777777, 0.888888),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1),
 "update": 1,
-"values": [false, true]
-}
-
-[sub_resource type="Animation" id="Animation_1uly1"]
-resource_name = "Melee_Attack2"
-step = 0.2
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.2, 0.4, 0.6, 0.8),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
-"update": 0,
-"values": [0, 1, 2, 3, 4]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Sprite2D:vframes")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [1]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("Sprite2D:hframes")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [5]
-}
-tracks/3/type = "value"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath("Sprite2D:texture")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [ExtResource("7_vct1f")]
-}
-tracks/4/type = "value"
-tracks/4/imported = false
-tracks/4/enabled = true
-tracks/4/path = NodePath("Weapon HitBox1/CollisionShape2D:disabled")
-tracks/4/interp = 1
-tracks/4/loop_wrap = true
-tracks/4/keys = {
-"times": PackedFloat32Array(0.6, 0.8),
-"transitions": PackedFloat32Array(1, 1),
-"update": 1,
-"values": [false, true]
-}
-tracks/5/type = "value"
-tracks/5/imported = false
-tracks/5/enabled = true
-tracks/5/path = NodePath("Weapon HitBox2/CollisionShape2D:disabled")
-tracks/5/interp = 1
-tracks/5/loop_wrap = true
-tracks/5/keys = {
-"times": PackedFloat32Array(0.6, 0.8),
-"transitions": PackedFloat32Array(1, 1),
-"update": 1,
-"values": [false, true]
-}
-
-[sub_resource type="Animation" id="Animation_hfgu6"]
-resource_name = "Melee_Attack3"
-step = 0.142857
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.142857, 0.285714, 0.428571, 0.571429, 0.714286, 0.857143),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
-"update": 0,
-"values": [0, 1, 2, 3, 4, 5, 6]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Sprite2D:vframes")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [1]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("Sprite2D:hframes")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [7]
-}
-tracks/3/type = "value"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath("Sprite2D:texture")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [ExtResource("8_uo6rn")]
+"values": [Vector2i(0, 0), Vector2i(1, 0), Vector2i(2, 0), Vector2i(3, 0), Vector2i(4, 0), Vector2i(1, 1), Vector2i(2, 1), Vector2i(3, 1), Vector2i(4, 1)]
 }
 
 [sub_resource type="Animation" id="Animation_2joew"]
@@ -620,6 +491,18 @@ tracks/5/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [false]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("Sprite2D:frame_coords")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Vector2i(0, 0)]
 }
 
 [sub_resource type="Animation" id="Animation_064q5"]
@@ -735,9 +618,7 @@ _data = {
 "Hit": SubResource("Animation_k0lxa"),
 "Idle": SubResource("Animation_vp261"),
 "Jump": SubResource("Animation_t5hb0"),
-"Melee_Attack1": SubResource("Animation_01vvd"),
-"Melee_Attack2": SubResource("Animation_1uly1"),
-"Melee_Attack3": SubResource("Animation_hfgu6"),
+"Melee_Attack": SubResource("Animation_jphad"),
 "RESET": SubResource("Animation_2joew"),
 "Ranged_Attack": SubResource("Animation_064q5"),
 "Run": SubResource("Animation_yml6d")
@@ -805,17 +686,11 @@ script = ExtResource("15_em3jr")
 [node name="Dash" type="Node2D" parent="FiniteStateMachine"]
 script = ExtResource("17_jhagj")
 
-[node name="Melee_Attack1" type="Node2D" parent="FiniteStateMachine"]
+[node name="Melee_Attack" type="Node2D" parent="FiniteStateMachine"]
 script = ExtResource("18_oh8yk")
 
-[node name="Melee_Attack2" type="Node2D" parent="FiniteStateMachine"]
-script = ExtResource("19_g1h2u")
-
-[node name="Melee_Attack3" type="Node2D" parent="FiniteStateMachine"]
-script = ExtResource("20_yi7lh")
-
 [node name="Ranged_Attack" type="Node2D" parent="FiniteStateMachine"]
-script = ExtResource("10_ll0os")
+script = ExtResource("18_ghoji")
 
 [node name="Hit" type="Node2D" parent="FiniteStateMachine"]
 script = ExtResource("10_ll0os")
@@ -833,9 +708,6 @@ one_shot = true
 
 [node name="Coyote Timer" type="Timer" parent="."]
 wait_time = 0.15
-one_shot = true
-
-[node name="Attack Interval" type="Timer" parent="."]
 one_shot = true
 
 [node name="Invincible Timer" type="Timer" parent="."]
