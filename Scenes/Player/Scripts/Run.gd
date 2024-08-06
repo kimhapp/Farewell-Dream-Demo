@@ -21,9 +21,9 @@ func transition():
 	elif !(Input.is_action_pressed("Left") or Input.is_action_pressed("Right")):
 		get_parent().change_state("Idle")
 		
-	elif Input.is_action_just_pressed("Melee_Attack"):
+	elif Input.is_action_pressed("Melee_Attack"):
 		get_parent().change_state("Melee_Attack")
 	
-	elif Input.is_action_just_pressed("Ranged_Attack"):
+	elif Input.is_action_pressed("Ranged_Attack"):
 		get_parent().change_state("Ranged_Attack")
 	

@@ -20,8 +20,8 @@ func transition():
 	elif player.velocity.y > 0:
 		get_parent().change_state("Fall")
 		
-	elif Input.is_action_just_pressed("Melee_Attack") and !player.has_air_attacked:
+	elif Input.is_action_pressed("Melee_Attack") and !player.has_air_attacked:
 		get_parent().change_state("Melee_Attack")
 		
-	elif Input.is_action_just_pressed("Ranged_Attack"):
+	elif Input.is_action_pressed("Ranged_Attack") and !player.has_air_range_attacked:
 		get_parent().change_state("Ranged_Attack")

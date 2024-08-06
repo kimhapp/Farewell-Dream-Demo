@@ -8,6 +8,7 @@ var direction : float
 var has_air_jumped : bool
 var has_air_dashed : bool
 var has_air_attacked : bool
+var has_air_range_attacked : bool
 
 @onready var animation_player = $AnimationPlayer
 @onready var sprite_2d = $Sprite2D
@@ -41,6 +42,7 @@ func _physics_process(_delta):
 		has_air_dashed = false
 		has_air_jumped = false
 		has_air_attacked = false
+		has_air_range_attacked = false
 
 func can_dash():
 	return dash_delay_timer.is_stopped()

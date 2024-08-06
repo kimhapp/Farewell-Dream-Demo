@@ -31,11 +31,11 @@ func transition():
 		elif Input.is_action_just_pressed("Jump") and player.is_on_floor():
 			get_parent().change_state("Jump")
 		
-		elif Input.is_action_just_pressed("Jump") and !player.has_air_jumped:
+		elif Input.is_action_just_pressed("Jump") and !player.is_on_floor() and !player.has_air_jumped:
 			player.has_air_attacked = false
 			get_parent().change_state("Air_Jumping")
 		
-		elif Input.is_action_just_pressed("Ranged_Attack"):
+		elif Input.is_action_pressed("Ranged_Attack") and !player.has_air_range_attacked:
 			get_parent().change_state("Ranged_Attack")
 			
 		elif player.velocity.y > 0:
