@@ -703,7 +703,7 @@ wait_time = 0.15
 one_shot = true
 
 [node name="Dash Delay Timer" type="Timer" parent="."]
-wait_time = 0.3
+wait_time = 0.5
 one_shot = true
 
 [node name="Coyote Timer" type="Timer" parent="."]

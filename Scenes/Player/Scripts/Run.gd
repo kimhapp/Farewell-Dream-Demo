@@ -4,11 +4,16 @@ func enter():
 	super.enter()
 	animation_player.play("Run")
 
+func _physics_process(delta):
+	player.handle_move(delta)
+	player.flip_sprite()
+	transition()
+
 func transition():
 	if Input.is_action_just_pressed("Jump"):
 		get_parent().change_state("Jump")
 		
-	elif Input.is_action_just_pressed("Dash") and player.can_dash:
+	elif Input.is_action_just_pressed("Dash") and player.can_dash():
 		get_parent().change_state("Dash")
 		
 	elif !player.is_on_floor() and player.coyote_timer.is_stopped():

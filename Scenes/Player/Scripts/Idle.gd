@@ -8,7 +8,7 @@ func transition():
 	if Input.is_action_pressed("Left") or Input.is_action_pressed("Right"):
 		get_parent().change_state("Run")
 		
-	elif Input.is_action_just_pressed("Dash") and player.can_dash:
+	elif Input.is_action_just_pressed("Dash") and player.can_dash():
 		get_parent().change_state("Dash")
 		
 	elif Input.is_action_just_pressed("Jump"):

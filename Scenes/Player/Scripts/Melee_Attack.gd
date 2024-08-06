@@ -2,32 +2,45 @@ extends State
 
 func enter():
 	super.enter()
-	player.set_physics_process(false)
-	player.velocity.y = 0
+	if !player.is_on_floor():
+		player.has_air_attacked = true
+		player.velocity.y = 0
 	animation_player.speed_scale = 2.25
 	animation_player.play("Melee_Attack")
 
 func _physics_process(delta):
-	if !animation_player.is_playing():
-		transition()
+	player.velocity.x = 0
+	player.velocity.y += player.ATTACK_GRAVITY * delta
+	
+	player.move_and_slide()
+	
+	transition()
 
 func exit():
 	super.exit()
-	player.set_physics_process(true)
 	animation_player.speed_scale = 1
 
 func transition():
-	if Input.is_action_pressed("Left") or Input.is_action_pressed("Right"):
-		get_parent().change_state("Run")
-		
-	elif Input.is_action_just_pressed("Dash") and player.can_dash:
+	if Input.is_action_just_pressed("Dash") and player.can_dash():
+		player.has_air_attacked = false
 		get_parent().change_state("Dash")
 		
-	elif Input.is_action_just_pressed("Jump"):
-		get_parent().change_state("Jump")
+	elif !animation_player.is_playing():
+		if Input.is_action_pressed("Left") or Input.is_action_pressed("Right"):
+			get_parent().change_state("Run")
 		
-	elif Input.is_action_just_pressed("Ranged_Attack"):
-		get_parent().change_state("Ranged_Attack")
+		elif Input.is_action_just_pressed("Jump") and player.is_on_floor():
+			get_parent().change_state("Jump")
 		
-	else:
-		get_parent().change_state("Idle")
+		elif Input.is_action_just_pressed("Jump") and !player.has_air_jumped:
+			player.has_air_attacked = false
+			get_parent().change_state("Air_Jumping")
+		
+		elif Input.is_action_just_pressed("Ranged_Attack"):
+			get_parent().change_state("Ranged_Attack")
+			
+		elif player.velocity.y > 0:
+			get_parent().change_state("Fall")
+			
+		else:
+			get_parent().change_state("Idle")

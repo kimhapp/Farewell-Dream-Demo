@@ -5,28 +5,21 @@ extends State
 
 func enter():
 	super.enter()
+	player.dash_delay_timer.start()
 	animation_player.play("Dash")
-	
+		
 	if player.sprite_2d.flip_h:
 		player.direction = -1
 	else:
 		player.direction = 1
-	
+		
 	dash_timer.start()
-	
+		
 	player.velocity.x = player.direction * DASH_SPEED
 	player.velocity.y = 0
-	
+		
 	if !player.is_on_floor():
 		player.has_air_dashed = true
-	
-	player.dash_delay_timer.start()
-	
-	player.set_physics_process(false)
-
-func exit():
-	super.exit()
-	player.set_physics_process(true)
 
 func _physics_process(_delta):
 	player.move_and_slide()
