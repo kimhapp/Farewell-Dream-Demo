@@ -9,7 +9,6 @@ func enter():
 
 func _physics_process(delta):
 	player.handle_move(delta)
-	player.flip_sprite()
 	transition()
 
 func transition():

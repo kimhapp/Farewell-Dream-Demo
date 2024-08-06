@@ -23,6 +23,11 @@ func handle_move(delta):
 	direction = Input.get_axis("Left", "Right")
 	velocity.x = direction * SPEED
 	
+	if direction > 0:
+		sprite_2d.flip_h = false
+	elif direction < 0:
+		sprite_2d.flip_h = true
+	
 	var was_on_floor = is_on_floor()
 	
 	move_and_slide()
@@ -30,12 +35,6 @@ func handle_move(delta):
 	if was_on_floor && !is_on_floor():
 		print("COyote Timer start")
 		coyote_timer.start()
-
-func flip_sprite():
-	if direction > 0:
-		sprite_2d.flip_h = false
-	elif direction < 0:
-		sprite_2d.flip_h = true
 
 func _physics_process(_delta):
 	if is_on_floor():

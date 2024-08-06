@@ -13,7 +13,6 @@ func _physics_process(delta):
 	player.velocity.y += player.ATTACK_GRAVITY * delta
 	
 	player.move_and_slide()
-	
 	transition()
 
 func exit():
