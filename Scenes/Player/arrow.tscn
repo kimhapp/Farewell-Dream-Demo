@@ -1,0 +1,56 @@
+[gd_scene load_steps=9 format=3 uid="uid://bgfjf7k0ltrm8"]
+
+[ext_resource type="Script" path="res://Scenes/Player/Scripts/Arrow.gd" id="1_uv4ag"]
+[ext_resource type="Texture2D" uid="uid://cfmoycxcts7jc" path="res://Assets/Player_Sprites/Spear move.png" id="2_e2pjp"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7kq2t"]
+atlas = ExtResource("2_e2pjp")
+region = Rect2(0, 0, 60, 20)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lhw1w"]
+atlas = ExtResource("2_e2pjp")
+region = Rect2(60, 0, 60, 20)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_l7403"]
+atlas = ExtResource("2_e2pjp")
+region = Rect2(120, 0, 60, 20)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mbsof"]
+atlas = ExtResource("2_e2pjp")
+region = Rect2(180, 0, 60, 20)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_tu2nb"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7kq2t")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lhw1w")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_l7403")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mbsof")
+}],
+"loop": true,
+"name": &"default",
+"speed": 8.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_jqhv0"]
+size = Vector2(42, 5)
+
+[node name="Arrow" type="Area2D"]
+script = ExtResource("1_uv4ag")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_tu2nb")
+autoplay = "default"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(1, 0.5)
+shape = SubResource("RectangleShape2D_jqhv0")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

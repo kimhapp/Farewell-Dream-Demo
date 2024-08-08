@@ -5,7 +5,6 @@ func enter():
 	if !player.is_on_floor():
 		player.has_air_attacked = true
 		player.velocity.y = 0
-	animation_player.speed_scale = 2.25
 	animation_player.play("Melee_Attack")
 
 func _physics_process(delta):
@@ -14,10 +13,6 @@ func _physics_process(delta):
 	
 	player.move_and_slide()
 	transition()
-
-func exit():
-	super.exit()
-	animation_player.speed_scale = 1
 
 func transition():
 	if Input.is_action_just_pressed("Dash") and player.can_dash():

@@ -1,12 +1,19 @@
 extends State
 
+@export var arrow_scene : PackedScene
+@onready var Arrow = $"../../Arrow"
+
 func enter():
 	super.enter()
 	if !player.is_on_floor():
 		player.has_air_range_attacked = true
 		player.velocity.y = 0
-	animation_player.speed_scale = 2.25
 	animation_player.play("Ranged_Attack")
+
+func shoot():
+	var arrow = arrow_scene.instantiate()
+	arrow.position = Arrow.global_position
+	get_tree().current_scene.add_child(arrow)
 
 func _physics_process(delta):
 	player.velocity.x = 0
@@ -14,10 +21,6 @@ func _physics_process(delta):
 	
 	player.move_and_slide()
 	transition()
-
-func exit():
-	super.exit()
-	animation_player.speed_scale = 1
 
 func transition():
 	if Input.is_action_just_pressed("Dash") and player.can_dash():
