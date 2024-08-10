@@ -1,7 +1,7 @@
 extends State
 
 @export var arrow_scene : PackedScene
-@onready var Arrow = $"../../Arrow"
+@onready var arrow_node = $"../../Arrow"
 
 func enter():
 	super.enter()
@@ -12,7 +12,7 @@ func enter():
 
 func shoot():
 	var arrow = arrow_scene.instantiate()
-	arrow.position = Arrow.global_position
+	arrow.position = arrow_node.global_position
 	get_tree().current_scene.add_child(arrow)
 
 func _physics_process(delta):
