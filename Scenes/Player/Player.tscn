@@ -717,7 +717,7 @@ script = ExtResource("18_oh8yk")
 script = ExtResource("18_ghoji")
 arrow_scene = ExtResource("19_nvsef")
 
-[node name="Hit" type="Node2D" parent="FiniteStateMachine"]
+[node name="Take_Hit" type="Node2D" parent="FiniteStateMachine"]
 script = ExtResource("10_ll0os")
 
 [node name="Death" type="Node2D" parent="FiniteStateMachine"]

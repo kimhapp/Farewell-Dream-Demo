@@ -1,10 +1,14 @@
-[gd_scene load_steps=16 format=3 uid="uid://8yj6nwn4hvw5"]
+[gd_scene load_steps=23 format=3 uid="uid://8yj6nwn4hvw5"]
 
 [ext_resource type="Texture2D" uid="uid://c1seifpkkpjc8" path="res://Assets/Enemies_Sprites/Monsters_Creatures_Fantasy/Skeleton/Idle.png" id="1_j8tvb"]
+[ext_resource type="Script" path="res://Scenes/Enemies/Skeleton/Script/Skeleton.gd" id="1_qxvpx"]
 [ext_resource type="Texture2D" uid="uid://b76r67em5gmtx" path="res://Assets/Enemies_Sprites/Monsters_Creatures_Fantasy/Skeleton/Attack.png" id="2_lt38n"]
 [ext_resource type="Texture2D" uid="uid://dvyk7orgs61rn" path="res://Assets/Enemies_Sprites/Monsters_Creatures_Fantasy/Skeleton/Walk.png" id="3_vbg7p"]
 [ext_resource type="Texture2D" uid="uid://c7mnsxanoftfk" path="res://Assets/Enemies_Sprites/Monsters_Creatures_Fantasy/Skeleton/Shield.png" id="4_hyste"]
 [ext_resource type="Texture2D" uid="uid://8khkvv56r5fb" path="res://Assets/Enemies_Sprites/Monsters_Creatures_Fantasy/Skeleton/Death.png" id="5_sd37f"]
+[ext_resource type="Texture2D" uid="uid://l51c6sunuun3" path="res://Assets/Enemies_Sprites/Monsters_Creatures_Fantasy/Skeleton/Take Hit.png" id="7_2p6hh"]
+[ext_resource type="Script" path="res://Scripts/FiniteStateMachine.gd" id="8_vg58o"]
+[ext_resource type="Script" path="res://Scripts/State.gd" id="9_rsunm"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_2yptf"]
 radius = 14.0
@@ -376,6 +380,59 @@ tracks/3/keys = {
 "values": [0, 1, 2, 3]
 }
 
+[sub_resource type="Animation" id="Animation_cu81g"]
+resource_name = "Take_Hit"
+length = 0.666683
+step = 0.166667
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("7_2p6hh")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:hframes")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [4]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sprite2D:vframes")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [1]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Sprite2D:frame")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.166667, 0.333333, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_g1tuh"]
 _data = {
 "Attack": SubResource("Animation_dbguc"),
@@ -383,6 +440,7 @@ _data = {
 "Idle": SubResource("Animation_x5ebo"),
 "RESET": SubResource("Animation_fk4fn"),
 "Shield": SubResource("Animation_cphnw"),
+"Take_Hit": SubResource("Animation_cu81g"),
 "Walk": SubResource("Animation_1ef0r")
 }
 
@@ -393,8 +451,15 @@ size = Vector2(73, 43)
 radius = 6.0
 height = 26.0
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_1mvh0"]
+radius = 101.511
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_s8x4n"]
+radius = 92.0024
+
 [node name="Skeleton" type="CharacterBody2D"]
 scale = Vector2(0.75, 0.75)
+script = ExtResource("1_qxvpx")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(-3.6, -26.06)
@@ -423,3 +488,45 @@ disabled = true
 position = Vector2(26, -31)
 shape = SubResource("CapsuleShape2D_fta5b")
 disabled = true
+
+[node name="Active Range" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Active Range"]
+position = Vector2(0, -26)
+shape = SubResource("CircleShape2D_1mvh0")
+
+[node name="Chase Range" type="Area2D" parent="."]
+position = Vector2(0, -26)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Chase Range"]
+shape = SubResource("CircleShape2D_s8x4n")
+disabled = true
+
+[node name="Line of Sight" type="RayCast2D" parent="."]
+position = Vector2(0, -26)
+scale = Vector2(1, 7)
+target_position = Vector2(200, 0)
+
+[node name="FiniteStateMachine" type="Node2D" parent="."]
+script = ExtResource("8_vg58o")
+
+[node name="Idle" type="Node2D" parent="FiniteStateMachine"]
+script = ExtResource("9_rsunm")
+
+[node name="Patrol" type="Node2D" parent="FiniteStateMachine"]
+script = ExtResource("9_rsunm")
+
+[node name="Chase" type="Node2D" parent="FiniteStateMachine"]
+script = ExtResource("9_rsunm")
+
+[node name="Attack" type="Node2D" parent="FiniteStateMachine"]
+script = ExtResource("9_rsunm")
+
+[node name="Shield" type="Node2D" parent="FiniteStateMachine"]
+script = ExtResource("9_rsunm")
+
+[node name="Take_Hit" type="Node2D" parent="FiniteStateMachine"]
+script = ExtResource("9_rsunm")
+
+[node name="Death" type="Node2D" parent="FiniteStateMachine"]
+script = ExtResource("9_rsunm")
