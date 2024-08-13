@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://8yj6nwn4hvw5"]
+[gd_scene load_steps=25 format=3 uid="uid://8yj6nwn4hvw5"]
 
 [ext_resource type="Texture2D" uid="uid://c1seifpkkpjc8" path="res://Assets/Enemies_Sprites/Monsters_Creatures_Fantasy/Skeleton/Idle.png" id="1_j8tvb"]
 [ext_resource type="Script" path="res://Scenes/Enemies/Skeleton/Script/Skeleton.gd" id="1_qxvpx"]
@@ -8,6 +8,8 @@
 [ext_resource type="Texture2D" uid="uid://8khkvv56r5fb" path="res://Assets/Enemies_Sprites/Monsters_Creatures_Fantasy/Skeleton/Death.png" id="5_sd37f"]
 [ext_resource type="Texture2D" uid="uid://l51c6sunuun3" path="res://Assets/Enemies_Sprites/Monsters_Creatures_Fantasy/Skeleton/Take Hit.png" id="7_2p6hh"]
 [ext_resource type="Script" path="res://Scripts/FiniteStateMachine.gd" id="8_vg58o"]
+[ext_resource type="Script" path="res://Scenes/Enemies/Skeleton/Script/Skeleton_Idle.gd" id="9_22b6y"]
+[ext_resource type="Script" path="res://Scenes/Enemies/Skeleton/Script/Skeletion_Deactivate.gd" id="9_jf482"]
 [ext_resource type="Script" path="res://Scripts/State.gd" id="9_rsunm"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_2yptf"]
@@ -448,17 +450,18 @@ _data = {
 size = Vector2(73, 43)
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_fta5b"]
-radius = 6.0
-height = 26.0
+radius = 7.83334
+height = 47.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_1mvh0"]
-radius = 101.511
+radius = 723.289
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_s8x4n"]
-radius = 92.0024
+radius = 441.525
 
 [node name="Skeleton" type="CharacterBody2D"]
 scale = Vector2(0.75, 0.75)
+collision_layer = 4
 script = ExtResource("1_qxvpx")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
@@ -476,6 +479,8 @@ libraries = {
 }
 
 [node name="Attack Hitbox" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Attack Hitbox"]
 position = Vector2(33.5, -31.5)
@@ -485,11 +490,13 @@ disabled = true
 [node name="Shield Hitbox" type="Area2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Shield Hitbox"]
-position = Vector2(26, -31)
+position = Vector2(23.5, -23.5)
 shape = SubResource("CapsuleShape2D_fta5b")
 disabled = true
 
 [node name="Active Range" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Active Range"]
 position = Vector2(0, -26)
@@ -497,6 +504,8 @@ shape = SubResource("CircleShape2D_1mvh0")
 
 [node name="Chase Range" type="Area2D" parent="."]
 position = Vector2(0, -26)
+collision_layer = 0
+collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Chase Range"]
 shape = SubResource("CircleShape2D_s8x4n")
@@ -505,13 +514,24 @@ disabled = true
 [node name="Line of Sight" type="RayCast2D" parent="."]
 position = Vector2(0, -26)
 scale = Vector2(1, 7)
+enabled = false
 target_position = Vector2(200, 0)
+collision_mask = 2
+
+[node name="Idle Timer" type="Timer" parent="."]
+one_shot = true
+
+[node name="Patrol Timer" type="Timer" parent="."]
+one_shot = true
 
 [node name="FiniteStateMachine" type="Node2D" parent="."]
 script = ExtResource("8_vg58o")
 
+[node name="Deactivate" type="Node2D" parent="FiniteStateMachine"]
+script = ExtResource("9_jf482")
+
 [node name="Idle" type="Node2D" parent="FiniteStateMachine"]
-script = ExtResource("9_rsunm")
+script = ExtResource("9_22b6y")
 
 [node name="Patrol" type="Node2D" parent="FiniteStateMachine"]
 script = ExtResource("9_rsunm")
@@ -530,3 +550,6 @@ script = ExtResource("9_rsunm")
 
 [node name="Death" type="Node2D" parent="FiniteStateMachine"]
 script = ExtResource("9_rsunm")
+
+[connection signal="body_entered" from="Active Range" to="." method="_on_active_range_body_entered"]
+[connection signal="body_exited" from="Active Range" to="." method="_on_active_range_body_exited"]

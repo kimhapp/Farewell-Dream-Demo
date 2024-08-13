@@ -10,7 +10,6 @@ var has_air_dashed : bool
 var has_air_attacked : bool
 var has_air_range_attacked : bool
 
-@onready var animation_player = $AnimationPlayer
 @onready var sprite_2d = $Sprite2D
 @onready var dash_delay_timer = $"Dash Delay Timer"
 @onready var coyote_timer = $"Coyote Timer"
