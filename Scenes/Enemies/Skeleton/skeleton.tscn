@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://8yj6nwn4hvw5"]
+[gd_scene load_steps=27 format=3 uid="uid://8yj6nwn4hvw5"]
 
 [ext_resource type="Texture2D" uid="uid://c1seifpkkpjc8" path="res://Assets/Enemies_Sprites/Monsters_Creatures_Fantasy/Skeleton/Idle.png" id="1_j8tvb"]
 [ext_resource type="Script" path="res://Scenes/Enemies/Skeleton/Script/Skeleton.gd" id="1_qxvpx"]
@@ -11,6 +11,8 @@
 [ext_resource type="Script" path="res://Scenes/Enemies/Skeleton/Script/Skeleton_Idle.gd" id="9_22b6y"]
 [ext_resource type="Script" path="res://Scenes/Enemies/Skeleton/Script/Skeletion_Deactivate.gd" id="9_jf482"]
 [ext_resource type="Script" path="res://Scripts/State.gd" id="9_rsunm"]
+[ext_resource type="Script" path="res://Scenes/Enemies/Skeleton/Skeleton_Patrol.gd" id="11_ee5il"]
+[ext_resource type="Script" path="res://Scenes/Enemies/Skeleton/Skeleton_Chase.gd" id="12_3achh"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_2yptf"]
 radius = 14.0
@@ -481,6 +483,7 @@ libraries = {
 [node name="Attack Hitbox" type="Area2D" parent="."]
 collision_layer = 0
 collision_mask = 2
+monitoring = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Attack Hitbox"]
 position = Vector2(33.5, -31.5)
@@ -488,6 +491,7 @@ shape = SubResource("RectangleShape2D_nr51q")
 disabled = true
 
 [node name="Shield Hitbox" type="Area2D" parent="."]
+monitoring = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Shield Hitbox"]
 position = Vector2(23.5, -23.5)
@@ -506,22 +510,25 @@ shape = SubResource("CircleShape2D_1mvh0")
 position = Vector2(0, -26)
 collision_layer = 0
 collision_mask = 2
+monitoring = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Chase Range"]
 shape = SubResource("CircleShape2D_s8x4n")
-disabled = true
 
 [node name="Line of Sight" type="RayCast2D" parent="."]
 position = Vector2(0, -26)
 scale = Vector2(1, 7)
 enabled = false
+exclude_parent = false
 target_position = Vector2(200, 0)
 collision_mask = 2
 
 [node name="Idle Timer" type="Timer" parent="."]
+wait_time = 5.0
 one_shot = true
 
 [node name="Patrol Timer" type="Timer" parent="."]
+wait_time = 5.0
 one_shot = true
 
 [node name="FiniteStateMachine" type="Node2D" parent="."]
@@ -534,10 +541,10 @@ script = ExtResource("9_jf482")
 script = ExtResource("9_22b6y")
 
 [node name="Patrol" type="Node2D" parent="FiniteStateMachine"]
-script = ExtResource("9_rsunm")
+script = ExtResource("11_ee5il")
 
 [node name="Chase" type="Node2D" parent="FiniteStateMachine"]
-script = ExtResource("9_rsunm")
+script = ExtResource("12_3achh")
 
 [node name="Attack" type="Node2D" parent="FiniteStateMachine"]
 script = ExtResource("9_rsunm")
@@ -553,3 +560,4 @@ script = ExtResource("9_rsunm")
 
 [connection signal="body_entered" from="Active Range" to="." method="_on_active_range_body_entered"]
 [connection signal="body_exited" from="Active Range" to="." method="_on_active_range_body_exited"]
+[connection signal="body_exited" from="Chase Range" to="FiniteStateMachine/Chase" method="_on_chase_range_body_exited"]

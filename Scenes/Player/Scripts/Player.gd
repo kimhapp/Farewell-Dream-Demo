@@ -18,7 +18,8 @@ func _ready():
 	set_physics_process(true)
 
 func handle_move(delta):
-	velocity.y += GRAVITY * delta
+	if !is_on_floor():
+		velocity.y = GRAVITY * delta
 	
 	direction = Input.get_axis("Left", "Right")
 	velocity.x = direction * SPEED
