@@ -11,8 +11,8 @@
 [ext_resource type="Script" path="res://Scenes/Enemies/Skeleton/Script/Skeleton_Idle.gd" id="9_22b6y"]
 [ext_resource type="Script" path="res://Scenes/Enemies/Skeleton/Script/Skeletion_Deactivate.gd" id="9_jf482"]
 [ext_resource type="Script" path="res://Scripts/State.gd" id="9_rsunm"]
-[ext_resource type="Script" path="res://Scenes/Enemies/Skeleton/Skeleton_Patrol.gd" id="11_ee5il"]
-[ext_resource type="Script" path="res://Scenes/Enemies/Skeleton/Skeleton_Chase.gd" id="12_3achh"]
+[ext_resource type="Script" path="res://Scenes/Enemies/Skeleton/Script/Skeleton_Patrol.gd" id="11_ee5il"]
+[ext_resource type="Script" path="res://Scenes/Enemies/Skeleton/Script/Skeleton_Chase.gd" id="12_3achh"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_2yptf"]
 radius = 14.0
@@ -456,7 +456,7 @@ radius = 7.83334
 height = 47.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_1mvh0"]
-radius = 723.289
+radius = 2438.98
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_s8x4n"]
 radius = 441.525
