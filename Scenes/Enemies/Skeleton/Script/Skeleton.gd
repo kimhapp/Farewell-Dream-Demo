@@ -2,6 +2,7 @@ extends CharacterBody2D
 
 @export var SPEED = 40.0
 @export var GRAVITY = 1000.0
+@export var HP = 100.0
 
 @onready var sprite_2d = $Sprite2D
 @onready var line_of_sight = $"Line of Sight"

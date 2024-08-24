@@ -1,5 +1,5 @@
-extends Node2D
 class_name State
+extends Node2D
 
 @onready var player = owner.get_parent().find_child("Player")
 @onready var animation_player = owner.find_child("AnimationPlayer")

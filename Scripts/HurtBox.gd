@@ -2,6 +2,7 @@ class_name HurtBox
 extends Area2D
 
 @export var damage_reduction : float
+signal taking_hit(damage)
 
 func _init():
 	collision_layer = 0
@@ -15,4 +16,8 @@ func _on_area_entered(hitbox : HitBox):
 		return
 	
 	if owner.find_child("Take_Hit"):
-		owner.take_hit(hitbox.damage, damage_reduction)
+		var damage = hitbox.damage
+		var final_dmg = damage * (1.0 - damage_reduction)
+		
+		owner.HP -= final_dmg
+		emit_signal("taking_hit", final_dmg)

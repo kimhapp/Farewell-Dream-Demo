@@ -1,7 +1,7 @@
 [gd_scene load_steps=6 format=3 uid="uid://bbq3h2sq3n3rr"]
 
 [ext_resource type="PackedScene" uid="uid://emnihdau0kai" path="res://Scenes/Player/Player.tscn" id="1_brwfm"]
-[ext_resource type="PackedScene" uid="uid://8yj6nwn4hvw5" path="res://Scenes/Enemies/Skeleton/Skeleton.tscn" id="2_ayvkm"]
+[ext_resource type="PackedScene" uid="uid://8yj6nwn4hvw5" path="res://Scenes/Enemies/Skeleton/skeleton.tscn" id="2_ayvkm"]
 [ext_resource type="Texture2D" uid="uid://b3drwbvulask2" path="res://Assets/Testing_Rooms/Assets/Tiles.png" id="2_ellch"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_vrnkx"]
