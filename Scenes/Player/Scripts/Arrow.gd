@@ -21,5 +21,5 @@ func _physics_process(delta):
 	
 	position.x += velocity.x * delta
 
-func _on_body_entered(body):
+func _on_body_entered(_body):
 	queue_free()

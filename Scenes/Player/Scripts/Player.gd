@@ -13,13 +13,14 @@ var has_air_range_attacked : bool
 @onready var sprite_2d = $Sprite2D
 @onready var dash_delay_timer = $"Dash Delay Timer"
 @onready var coyote_timer = $"Coyote Timer"
+@onready var hitbox = $Sprite2D/HitBox
 
 func _ready():
 	set_physics_process(true)
 
 func handle_move(delta):
 	if !is_on_floor():
-		velocity.y = GRAVITY * delta
+		velocity.y += GRAVITY * delta
 	
 	direction = Input.get_axis("Left", "Right")
 	velocity.x = direction * SPEED

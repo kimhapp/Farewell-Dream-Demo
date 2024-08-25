@@ -6,6 +6,8 @@ extends CharacterBody2D
 
 @onready var sprite_2d = $Sprite2D
 @onready var line_of_sight = $"Line of Sight"
+@onready var hurt_box = $Sprite2D/HurtBox
+@onready var health_bar = $HealthBar
 
 var direction : float
 var active : bool
@@ -13,6 +15,7 @@ var active : bool
 func _ready():
 	active = false
 	set_physics_process(false)
+	health_bar.init_health_bar(HP)
 
 func movement(delta):
 	velocity.x = direction * SPEED
@@ -27,10 +30,24 @@ func movement(delta):
 	
 	move_and_slide()
 
-func _on_active_range_body_entered(body):
+func _on_active_range_body_entered(_body):
 	active = true
 	set_physics_process(true)
 
-func _on_active_range_body_exited(body):
+func _on_active_range_body_exited(_body):
 	active = false
 	set_physics_process(false)
+
+func _on_hurt_box_area_entered(hitbox : HitBox):
+	health_bar.set_health_bar(HP)
+	HP -= hitbox.damage
+	health_bar.health = HP
+	
+	if HP <= 0:
+		HP = 0
+		
+		hurt_box.set_deferred("monitoring", false)
+		find_child("FiniteStateMachine").change_state("Death")
+	else:
+		find_child("FiniteStateMachine").change_state("Take_Hit")
+	

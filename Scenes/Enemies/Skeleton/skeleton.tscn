@@ -1,18 +1,23 @@
-[gd_scene load_steps=25 format=3 uid="uid://8yj6nwn4hvw5"]
+[gd_scene load_steps=30 format=3 uid="uid://8yj6nwn4hvw5"]
 
 [ext_resource type="Texture2D" uid="uid://c1seifpkkpjc8" path="res://Assets/Enemies_Sprites/Monsters_Creatures_Fantasy/Skeleton/Idle.png" id="1_j8tvb"]
 [ext_resource type="Script" path="res://Scenes/Enemies/Skeleton/Script/Skeleton.gd" id="1_qxvpx"]
 [ext_resource type="Texture2D" uid="uid://b76r67em5gmtx" path="res://Assets/Enemies_Sprites/Monsters_Creatures_Fantasy/Skeleton/Attack.png" id="2_lt38n"]
+[ext_resource type="Script" path="res://Scripts/HitBox.gd" id="3_1k0c1"]
+[ext_resource type="Script" path="res://Scripts/HurtBox.gd" id="3_n5r53"]
 [ext_resource type="Texture2D" uid="uid://dvyk7orgs61rn" path="res://Assets/Enemies_Sprites/Monsters_Creatures_Fantasy/Skeleton/Walk.png" id="3_vbg7p"]
 [ext_resource type="Texture2D" uid="uid://c7mnsxanoftfk" path="res://Assets/Enemies_Sprites/Monsters_Creatures_Fantasy/Skeleton/Shield.png" id="4_hyste"]
 [ext_resource type="Texture2D" uid="uid://8khkvv56r5fb" path="res://Assets/Enemies_Sprites/Monsters_Creatures_Fantasy/Skeleton/Death.png" id="5_sd37f"]
+[ext_resource type="PackedScene" uid="uid://dqq0ddkb8loqo" path="res://Scenes/HealthBar.tscn" id="5_v3a8d"]
 [ext_resource type="Texture2D" uid="uid://l51c6sunuun3" path="res://Assets/Enemies_Sprites/Monsters_Creatures_Fantasy/Skeleton/Take Hit.png" id="7_2p6hh"]
 [ext_resource type="Script" path="res://Scripts/FiniteStateMachine.gd" id="8_vg58o"]
 [ext_resource type="Script" path="res://Scenes/Enemies/Skeleton/Script/Skeleton_Idle.gd" id="9_22b6y"]
-[ext_resource type="Script" path="res://Scenes/Enemies/Skeleton/Script/Skeletion_Deactivate.gd" id="9_jf482"]
+[ext_resource type="Script" path="res://Scenes/Enemies/Skeleton/Script/Skeletion_Activate.gd" id="9_jf482"]
 [ext_resource type="Script" path="res://Scripts/State.gd" id="9_rsunm"]
 [ext_resource type="Script" path="res://Scenes/Enemies/Skeleton/Script/Skeleton_Patrol.gd" id="11_ee5il"]
 [ext_resource type="Script" path="res://Scenes/Enemies/Skeleton/Script/Skeleton_Chase.gd" id="12_3achh"]
+[ext_resource type="Script" path="res://Scenes/Enemies/Skeleton/Script/Skeleton_Take_Hit.gd" id="16_4tgv8"]
+[ext_resource type="Script" path="res://Scenes/Enemies/Skeleton/Script/Skeleton_Death.gd" id="17_pe0jp"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_2yptf"]
 radius = 14.0
@@ -408,7 +413,8 @@ radius = 441.525
 
 [node name="Skeleton" type="CharacterBody2D"]
 scale = Vector2(0.75, 0.75)
-collision_layer = 4
+collision_layer = 0
+collision_priority = 2.0
 script = ExtResource("1_qxvpx")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
@@ -416,7 +422,27 @@ position = Vector2(-3.6, -26.06)
 texture = ExtResource("1_j8tvb")
 hframes = 4
 
+[node name="HitBox" type="Area2D" parent="Sprite2D"]
+collision_layer = 0
+monitorable = false
+script = ExtResource("3_1k0c1")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Sprite2D/HitBox"]
+position = Vector2(3.6, -0.939999)
+shape = SubResource("CapsuleShape2D_2yptf")
+
+[node name="HurtBox" type="Area2D" parent="Sprite2D"]
+collision_layer = 0
+collision_mask = 4
+monitorable = false
+script = ExtResource("3_n5r53")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Sprite2D/HurtBox"]
+position = Vector2(3.6, -0.939999)
+shape = SubResource("CapsuleShape2D_2yptf")
+
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
 position = Vector2(0, -27)
 shape = SubResource("CapsuleShape2D_2yptf")
 
@@ -426,6 +452,7 @@ libraries = {
 }
 
 [node name="Active Range" type="Area2D" parent="."]
+visible = false
 collision_layer = 0
 collision_mask = 2
 
@@ -434,6 +461,7 @@ position = Vector2(0, -26)
 shape = SubResource("CircleShape2D_1mvh0")
 
 [node name="Chase Range" type="Area2D" parent="."]
+visible = false
 position = Vector2(0, -26)
 collision_layer = 0
 collision_mask = 2
@@ -441,14 +469,6 @@ monitoring = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Chase Range"]
 shape = SubResource("CircleShape2D_s8x4n")
-
-[node name="Line of Sight" type="RayCast2D" parent="."]
-position = Vector2(0, -26)
-scale = Vector2(1, 7)
-enabled = false
-exclude_parent = false
-target_position = Vector2(200, 0)
-collision_mask = 2
 
 [node name="Idle Timer" type="Timer" parent="."]
 wait_time = 5.0
@@ -480,11 +500,28 @@ script = ExtResource("9_rsunm")
 script = ExtResource("9_rsunm")
 
 [node name="Take_Hit" type="Node2D" parent="FiniteStateMachine"]
-script = ExtResource("9_rsunm")
+script = ExtResource("16_4tgv8")
 
 [node name="Death" type="Node2D" parent="FiniteStateMachine"]
-script = ExtResource("9_rsunm")
+script = ExtResource("17_pe0jp")
 
+[node name="HealthBar" parent="." instance=ExtResource("5_v3a8d")]
+offset_left = -12.0
+offset_top = -60.0
+offset_right = 12.0
+offset_bottom = -58.0
+
+[node name="Line of Sight" type="RayCast2D" parent="."]
+position = Vector2(0, -26)
+scale = Vector2(1, 7)
+enabled = false
+exclude_parent = false
+target_position = Vector2(200, 0)
+collision_mask = 2
+
+[connection signal="area_entered" from="Sprite2D/HurtBox" to="." method="_on_hurt_box_area_entered"]
+[connection signal="animation_finished" from="AnimationPlayer" to="FiniteStateMachine/Take_Hit" method="_on_animation_player_animation_finished"]
+[connection signal="animation_finished" from="AnimationPlayer" to="FiniteStateMachine/Death" method="_on_animation_player_animation_finished"]
 [connection signal="body_entered" from="Active Range" to="." method="_on_active_range_body_entered"]
 [connection signal="body_exited" from="Active Range" to="." method="_on_active_range_body_exited"]
 [connection signal="body_exited" from="Chase Range" to="FiniteStateMachine/Chase" method="_on_chase_range_body_exited"]

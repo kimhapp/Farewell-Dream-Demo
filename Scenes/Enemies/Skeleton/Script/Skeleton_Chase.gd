@@ -1,8 +1,7 @@
 extends State
 
-@onready var chase_range = $"../../Chase Range"
-
 var out_of_range : bool
+@onready var chase_range = $"../../Chase Range"
 
 func enter():
 	super.enter()
@@ -21,6 +20,6 @@ func transition():
 	if out_of_range:
 		get_parent().change_state("Idle")
 
-func _on_chase_range_body_exited(body):
+func _on_chase_range_body_exited(_body):
 	out_of_range = true
 	chase_range.set_deferred("monitoring", false)
