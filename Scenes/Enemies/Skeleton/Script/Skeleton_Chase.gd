@@ -21,7 +21,7 @@ func _physics_process(delta):
 func transition():
 	if out_of_range:
 		get_parent().change_state("Idle")
-	elif distance.length() < 50:
+	elif abs(distance.x) < 50 and abs(distance.y) < 20:
 		var chance = randf()
 		
 		if chance > 0.3:
