@@ -44,9 +44,6 @@ func _on_hurt_box_area_entered(hitbox : HitBox):
 	health_bar.health = HP
 	
 	if HP <= 0:
-		HP = 0
-		
-		hurt_box.set_deferred("monitoring", false)
 		find_child("FiniteStateMachine").change_state("Death")
 	else:
 		find_child("FiniteStateMachine").change_state("Take_Hit")

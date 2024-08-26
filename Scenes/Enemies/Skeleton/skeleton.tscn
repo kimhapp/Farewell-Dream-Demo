@@ -481,7 +481,7 @@ one_shot = true
 [node name="FiniteStateMachine" type="Node2D" parent="."]
 script = ExtResource("8_vg58o")
 
-[node name="Deactivate" type="Node2D" parent="FiniteStateMachine"]
+[node name="Activate" type="Node2D" parent="FiniteStateMachine"]
 script = ExtResource("9_jf482")
 
 [node name="Idle" type="Node2D" parent="FiniteStateMachine"]

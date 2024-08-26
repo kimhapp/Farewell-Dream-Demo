@@ -10,7 +10,7 @@ func enter():
 
 func transition():
 	if !owner.active:
-		get_parent().change_state("Deactivate")
+		get_parent().change_state("Activate")
 	else:
 		if owner.line_of_sight.is_colliding():
 			get_parent().change_state("Chase")
