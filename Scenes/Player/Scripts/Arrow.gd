@@ -20,8 +20,5 @@ func _physics_process(delta):
 	velocity.x = direction * ARROW_SPEED
 	position.x += velocity.x * delta
 
-func _on_area_entered(_hurtbox : HurtBox):
-	queue_free()
-
 func _on_body_entered(_body):
 	queue_free()
